@@ -7,9 +7,29 @@ import type { StudentProfile } from './types.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
-app.use(cors({ origin: FRONTEND_URL }))
+// Allow requests from multiple origins (dev and production)
+const corsOptions = {
+  origin: function(origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'http://127.0.0.1:5173',
+      'https://roi-navigator-v1.vercel.app',
+      'https://roi-navigator-v1.onrender.com'
+    ]
+    
+    // Allow requests with no origin (mobile apps, curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('CORS not allowed'))
+    }
+  },
+  credentials: true
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 
 app.get('/health', (_req, res) => {

@@ -1,6 +1,9 @@
 import type { StudentProfile, ROIResult, University, DataVerification } from '../types'
 
-const BASE = '/api'
+// Use environment variable for API base URL, with fallback to relative path for dev
+const BASE = import.meta.env.VITE_API_BASE_URL 
+  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+  : '/api'
 
 export async function fetchROI(
   profile: StudentProfile

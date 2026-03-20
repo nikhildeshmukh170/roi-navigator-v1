@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import {
   ArrowLeft, BarChart3, Globe2, MapPin, Trash2, ExternalLink,
   LogOut, User, Mail, Calendar, BookOpen, Settings, History,
-  LayoutDashboard, TrendingUp, Clock, Shield
+  LayoutDashboard, Shield
 } from 'lucide-react'
 import { useAuth, type SavedSearch } from '../context/AuthContext'
 

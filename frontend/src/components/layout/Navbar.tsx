@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { BarChart3, User, LogOut, LogIn, Sparkles } from 'lucide-react'
+import { BarChart3, LogOut, LogIn, Sparkles } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { toast } from 'sonner'
 

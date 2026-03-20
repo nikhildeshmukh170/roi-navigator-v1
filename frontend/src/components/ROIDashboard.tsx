@@ -7,7 +7,7 @@ import {
 import {
   Trophy, Clock, CreditCard, Globe2, TrendingUp,
   IndianRupee, AlertTriangle, BookOpen, Save,
-  ChevronRight, Bookmark, ShieldCheck, PanelRight, PanelRightClose
+  ChevronRight, Bookmark, ShieldCheck, PanelRightClose
 } from 'lucide-react'
 import { toast } from 'sonner'
 import type { ROIResult, DataVerification } from '../types'
@@ -35,7 +35,7 @@ interface Props {
 }
 
 export default function ROIDashboard({
-  result: r, verification, loanLakhs, name, program,
+  result: r, verification, loanLakhs, program,
   onCompare, onReport, onSave, isSaved,
 }: Props) {
   const [tab, setTab]         = useState(0)

@@ -1,7 +1,6 @@
 import {
   ExternalLink, CheckCircle2, Clock, Database,
-  TrendingUp, AlertCircle, X, Shield, Wifi,
-  AlertTriangle, Info
+  TrendingUp, AlertCircle, X, Shield, Wifi, Info
 } from 'lucide-react'
 import type { DataVerification } from '../types'
 

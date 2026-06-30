@@ -1,4 +1,4 @@
-# ROI Oracle — Leap AI Hackathon 2026
+# ROI Navigator — Leap AI Hackathon 2026
 
 Personalised degree ROI calculator for Indian students going abroad.
 Built with React + Vite (frontend) and Express.js + TypeScript (backend), powered by Claude AI.
@@ -117,4 +117,4 @@ roi-oracle/
 - **Efficiency**: counselors take 2–3 hours to manually estimate ROI per student. This does it in ~10 seconds.
 - **Business impact**: directly accelerates LeapFinance loan conversions (60% of Leap's revenue).
 - **Demo**: use Priya's pre-filled profile for the live demo — it's already loaded on screen 1.
-- **Unique**: every competitor shows a university list. ROI Oracle shows a financial outcome with a breakeven date parents understand immediately.
+- **Unique**: every competitor shows a university list. ROI Navigator shows a financial outcome with a breakeven date parents understand immediately.

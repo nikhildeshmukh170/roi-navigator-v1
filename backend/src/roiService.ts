@@ -3,7 +3,7 @@ import type { StudentProfile, ROIResult, DataVerification } from './types.js'
 import { fetchVerifiedData } from './dataService.js'
 
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
-const MODEL = 'llama-3.1-8b-instant'
+const MODEL = 'openai/gpt-oss-120b'
 
 const SYSTEM_PROMPT = `You are ROI Oracle, a degree ROI calculator for Indian students going abroad.
 

@@ -18,7 +18,7 @@ export default function ROIPage() {
   const navigate  = useNavigate()
   const location  = useLocation()
   const {
-    step, profile, result, verification, loading, error,
+    step, profile, result, verification, provider, loading, error,
     selectedUnis, compute, loadSaved, toggleUni, goTo, reset,
   } = useROI()
 
@@ -66,7 +66,15 @@ export default function ROIPage() {
     <div className="max-w-5xl mx-auto px-5 py-7">
       <Stepper current={step} />
 
-      {step === 0 && <ProfileForm onSubmit={compute} loading={loading} error={error} />}
+      {step === 0 && (
+        <ProfileForm
+          initialProfile={profile ?? undefined}
+          onSubmit={compute}
+          onCancel={profile && result ? () => goTo(2) : undefined}
+          loading={loading}
+          error={error}
+        />
+      )}
 
       {step >= 1 && !user && <AuthGate />}
 
@@ -83,9 +91,11 @@ export default function ROIPage() {
         <ROIDashboard
           result={result}
           verification={verification}
+          provider={provider}
           loanLakhs={profile.loanLakhs}
           name={profile.name}
           program={profile.program}
+          onEditProfile={() => goTo(0)}
           onCompare={() => goTo(3 as Step)}
           onReport={() => goTo(4 as Step)}
           onSave={() => handleSave(profile, result, verification)}

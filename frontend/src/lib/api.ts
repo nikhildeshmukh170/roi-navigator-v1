@@ -1,14 +1,15 @@
-import type { StudentProfile, ROIResult, University, DataVerification } from '../types'
+import type { StudentProfile, ROIAnalysisResponse, University } from '../types'
 
 // Use environment variable for API base URL, with fallback to relative path for dev
-const BASE = import.meta.env.VITE_API_BASE_URL 
-  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+const API_ORIGIN = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '')
+const BASE = API_ORIGIN
+  ? `${API_ORIGIN}/api`
   : '/api'
 
 export async function fetchROI(
   profile: StudentProfile
-): Promise<{ result: ROIResult; verification: DataVerification }> {
-  const res = await fetch(`${BASE}/roi`, {
+): Promise<ROIAnalysisResponse> {
+  const res = await fetch(`${BASE}/roi/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(profile),

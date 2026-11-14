@@ -9,6 +9,7 @@ export function useROI() {
   const [profile, setProfile] = useState<StudentProfile | null>(null)
   const [result, setResult] = useState<ROIResult | null>(null)
   const [verification, setVerification] = useState<DataVerification | null>(null)
+  const [provider, setProvider] = useState('AI analysis')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [selectedUnis, setSelectedUnis] = useState<Set<number>>(new Set([0, 1]))
@@ -16,11 +17,12 @@ export function useROI() {
   const compute = async (p: StudentProfile) => {
     setLoading(true)
     setError(null)
-    setProfile(p)
     try {
       const data = await fetchROI(p)
+      setProfile(p)
       setResult(data.result)
       setVerification(data.verification)
+      setProvider(data.meta.provider)
       setStep(1)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong')
@@ -33,6 +35,7 @@ export function useROI() {
     setProfile(p)
     setResult(r)
     setVerification(v ?? null)
+    setProvider('AI analysis')
     setStep(2)
   }
 
@@ -48,11 +51,11 @@ export function useROI() {
   const goTo = (s: Step) => setStep(s)
   const reset = () => {
     setStep(0); setProfile(null); setResult(null)
-    setVerification(null); setError(null)
+    setVerification(null); setProvider('AI analysis'); setError(null)
   }
 
   return {
-    step, profile, result, verification, loading, error,
+    step, profile, result, verification, provider, loading, error,
     selectedUnis, compute, loadSaved, toggleUni, goTo, reset
   }
 }

@@ -30,7 +30,7 @@ export default function ProfileDashboard({ onLoadSearch, onBack }: Props) {
 
       {/* PROFILE HEADER */}
       <div className="profile-hero">
-        <button className="profile-back-btn" onClick={onBack}>← Back to ROI Oracle</button>
+        <button className="profile-back-btn" onClick={onBack}>← Back to ROI Navigator</button>
         <div className="profile-hero-inner">
           <div className="profile-avatar-lg">{user.avatar}</div>
           <div className="profile-hero-info">
@@ -242,7 +242,7 @@ export default function ProfileDashboard({ onLoadSearch, onBack }: Props) {
             <div className="section-label">Danger zone</div>
             <div className="settings-danger-row">
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--navy)' }}>Sign out of ROI Oracle</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--navy)' }}>Sign out of ROI Navigator</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>You can sign back in at any time.</div>
               </div>
               <button className="btn btn-outline btn-sm" onClick={logout}>Sign out</button>

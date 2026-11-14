@@ -1,11 +1,11 @@
 import Groq from 'groq-sdk'
-import type { StudentProfile, ROIResult, DataVerification } from './types.js'
+import type { StudentProfile, ROIAnalysisResponse, ROIResult } from './types.js'
 import { fetchVerifiedData } from './dataService.js'
 
 const client = new Groq({ apiKey: process.env.GROQ_API_KEY })
-const MODEL = 'llama-3.3-70b-versatile'
+const MODEL = 'openai/gpt-oss-120b'
 
-const SYSTEM_PROMPT = `You are ROI Oracle, a degree ROI calculator for Indian students going abroad.
+const SYSTEM_PROMPT = `You are ROI Navigator, a degree ROI calculator for Indian students going abroad.
 
 You will be given a student profile AND verified real-world data (salary from Adzuna API, costs from Numbeo, PR statistics from official government sources). You MUST use these verified numbers — do NOT invent or hallucinate values.
 
@@ -44,7 +44,7 @@ CRITICAL: Use the verified data values provided. Only use your reasoning for cal
 
 export async function computeROI(
   profile: StudentProfile
-): Promise<{ result: ROIResult; verification: DataVerification }> {
+): Promise<ROIAnalysisResponse> {
 
   // Step 1: Fetch real-world verified data in parallel
   const verification = await fetchVerifiedData(profile)
@@ -71,7 +71,7 @@ Return ROI JSON using ONLY these verified numbers.`
 
   const response = await client.chat.completions.create({
     model: MODEL,
-    max_tokens: 1024,
+    max_tokens: 4096,
     temperature: 0.1,
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },
@@ -87,5 +87,9 @@ Return ROI JSON using ONLY these verified numbers.`
     .trim()
 
   const result = JSON.parse(cleaned) as ROIResult
-  return { result, verification }
+  return {
+    result,
+    verification,
+    meta: { provider: 'AI analysis', generatedAt: new Date().toISOString() },
+  }
 }

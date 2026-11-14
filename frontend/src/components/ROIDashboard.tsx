@@ -7,7 +7,7 @@ import {
 import {
   Trophy, Clock, CreditCard, Globe2, TrendingUp,
   IndianRupee, AlertTriangle, BookOpen, Save,
-  ChevronRight, Bookmark, ShieldCheck, PanelRightClose
+  ChevronRight, Bookmark, ShieldCheck, PanelRightClose, Pencil, Sparkles
 } from 'lucide-react'
 import { toast } from 'sonner'
 import type { ROIResult, DataVerification } from '../types'
@@ -25,18 +25,20 @@ const TABS = [
 interface Props {
   result: ROIResult
   verification: DataVerification | null
+  provider: string
   loanLakhs: number
   name: string
   program: string
   onCompare: () => void
   onReport:  () => void
+  onEditProfile: () => void
   onSave?:   () => void
   isSaved?:  boolean
 }
 
 export default function ROIDashboard({
-  result: r, verification, loanLakhs, program,
-  onCompare, onReport, onSave, isSaved,
+  result: r, verification, provider, loanLakhs, program,
+  onCompare, onReport, onEditProfile, onSave, isSaved,
 }: Props) {
   const [tab, setTab]         = useState(0)
   const [saved, setSaved]     = useState(false)
@@ -107,7 +109,12 @@ export default function ROIDashboard({
           <div className="bg-navy-900 rounded-2xl p-5 flex items-center justify-between flex-wrap gap-3 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/15 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
-              <div className="text-xs font-bold text-white/50 uppercase tracking-widest mb-1.5">Best ROI pick for your profile</div>
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                <span className="text-xs font-bold text-white/50 uppercase tracking-widest">Best ROI pick for your profile</span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-white/10 border border-white/15 px-2 py-1 text-[10px] font-semibold text-white/80">
+                  <Sparkles size={10} />{provider}
+                </span>
+              </div>
               <div className="text-lg font-extrabold text-white">{r.best_university} — {program}</div>
             </div>
             <div className="flex items-center gap-2 relative z-10 flex-wrap">
@@ -201,6 +208,9 @@ export default function ROIDashboard({
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-500 leading-relaxed">{r.narrative}</div>
 
               <div className="flex gap-2 flex-wrap">
+                <button onClick={onEditProfile} className="btn-outline text-xs px-4 py-2 gap-1.5">
+                  <Pencil size={13} />Edit profile
+                </button>
                 <button onClick={onCompare} className="btn-outline text-xs px-4 py-2 gap-1.5">
                   <BookOpen size={13} />Compare unis
                 </button>

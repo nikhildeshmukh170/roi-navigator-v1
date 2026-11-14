@@ -67,7 +67,7 @@ export default function ProfilePage() {
           to="/"
           className="relative z-10 inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/15 mb-5 transition-all no-underline"
         >
-          <ArrowLeft size={12} />Back to ROI Oracle
+          <ArrowLeft size={12} />Back to ROI Navigator
         </Link>
 
         <div className="relative z-10 flex items-center gap-4 flex-wrap">
@@ -316,7 +316,7 @@ export default function ProfilePage() {
             </div>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <div className="text-sm font-semibold text-navy-900">Sign out of ROI Oracle</div>
+                <div className="text-sm font-semibold text-navy-900">Sign out of ROI Navigator</div>
                 <div className="text-xs text-slate-400 mt-0.5">You can sign back in at any time.</div>
               </div>
               <button

@@ -24,7 +24,7 @@ export default function Navbar() {
           </div>
           <div>
             <div className="text-base font-extrabold text-navy-900 leading-none tracking-tight">
-              ROI <span className="text-brand-orange font-bold"> Navigator</span>
+              ROI <span className="text-brand-orange font-bold">Navigator</span>
             </div>
             <div className="text-[10px] font-medium text-slate-400 mt-0.5 tracking-wide">by Leap Scholar</div>
           </div>

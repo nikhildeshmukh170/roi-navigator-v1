@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   User, Star, Briefcase, BookOpen, Globe2,
-  MapPin, IndianRupee, Wallet, Sparkles, ArrowRight
+  MapPin, IndianRupee, Wallet, Sparkles, ArrowRight, Pencil
 } from 'lucide-react'
 import type { StudentProfile } from '../types'
 
@@ -32,21 +32,23 @@ const COUNTRIES = ['Canada', 'UK', 'Australia', 'USA']
 const EXPERIENCE = ['none', '0-1', '1-3', '3+']
 
 interface Props {
+  initialProfile?: StudentProfile
   onSubmit: (p: StudentProfile) => void
+  onCancel?: () => void
   loading: boolean
   error: string | null
 }
 
-export default function ProfileForm({ onSubmit, loading, error }: Props) {
+export default function ProfileForm({ initialProfile, onSubmit, onCancel, loading, error }: Props) {
   const [form, setForm] = useState<StudentProfile>({
-    name: '',
-    gpa: '',
-    experience: 'none',
-    program: '',
-    country: 'Canada',
-    city: 'Toronto',
-    loanLakhs: 0,
-    familyIncome: '',
+    name: initialProfile?.name ?? '',
+    gpa: initialProfile?.gpa ?? '',
+    experience: initialProfile?.experience ?? 'none',
+    program: initialProfile?.program ?? '',
+    country: initialProfile?.country ?? 'Canada',
+    city: initialProfile?.city ?? 'Toronto',
+    loanLakhs: initialProfile?.loanLakhs ?? 0,
+    familyIncome: initialProfile?.familyIncome ?? '',
   })
 
   const set = (k: keyof StudentProfile, v: string | number) =>
@@ -73,28 +75,29 @@ export default function ProfileForm({ onSubmit, loading, error }: Props) {
       {/* Hero */}
       <div className="inline-flex items-center gap-2 bg-brand-green-light text-brand-green text-xs font-bold px-3 py-1.5 rounded-full border border-green-200 mb-4">
         <span className="w-2 h-2 bg-brand-green rounded-full animate-pulse-dot" />
-        Built for Smarter Decisions
+        {initialProfile ? 'Update your ROI profile' : 'ROI Navigator · personalized study-abroad insights'}
       </div>
       <h1 className="text-2xl font-extrabold text-navy-900 leading-snug tracking-tight mb-2">
-        Find out if studying abroad<br />
-        <span className="text-brand-orange">is worth it for you</span>
+        {initialProfile ? <>Make changes to your profile<br /><span className="text-brand-orange">and refresh your ROI</span></> : <>Find out if studying abroad<br /><span className="text-brand-orange">is worth it for you</span></>}
       </h1>
       <p className="text-sm text-slate-500 leading-relaxed mb-5 max-w-lg">
-        Fill in your profile and get a personalised ROI — time to job, loan breakeven, PR probability, salary trajectory, and a parent-ready report. Sign in to unlock your results.
+        {initialProfile
+          ? 'Update any details below. Your ROI, salary outlook, and recommendations will be recalculated from the revised profile.'
+          : 'Fill in your profile and get a personalised ROI — time to job, loan breakeven, PR probability, salary trajectory, and a parent-ready report. Sign in to unlock your results.'}
       </p>
 
       {/* Stats */}
-      <div className="flex gap-5 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
+      {!initialProfile && <div className="flex flex-wrap gap-5 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
         {stats.map(s => (
           <div key={s.label}>
             <div className={`text-lg font-extrabold ${s.color} tracking-tight`}>{s.val}</div>
             <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide mt-0.5">{s.label}</div>
           </div>
         ))}
-      </div>
+      </div>}
 
       {/* Form fields */}
-      <div className="grid grid-cols-2 gap-3.5 mb-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-2">
 
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-semibold text-navy-900 flex items-center gap-1.5">
@@ -115,7 +118,11 @@ export default function ProfileForm({ onSubmit, loading, error }: Props) {
           </label>
           <input
             className="input-field"
+            type="number"
             placeholder="e.g. 7.8"
+            min={0}
+            max={10}
+            step={0.1}
             value={form.gpa}
             onChange={e => set('gpa', e.target.value)}
             required
@@ -193,16 +200,23 @@ export default function ProfileForm({ onSubmit, loading, error }: Props) {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="btn-orange w-full mt-4 py-3.5 text-sm justify-center gap-2"
-      >
-        {loading
-          ? <><div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Analysing with Groq AI…</>
-          : <><Sparkles size={15} />Calculate my ROI<ArrowRight size={15} /></>
-        }
-      </button>
+      <div className="flex flex-col-reverse sm:flex-row gap-2 mt-4">
+        {onCancel && (
+          <button type="button" onClick={onCancel} disabled={loading} className="btn-outline py-3.5 text-sm justify-center">
+            Cancel
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn-orange flex-1 py-3.5 text-sm justify-center gap-2"
+        >
+          {loading
+            ? <><div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Analyzing your profile…</>
+            : <>{initialProfile ? <Pencil size={15} /> : <Sparkles size={15} />}{initialProfile ? 'Update ROI analysis' : 'Calculate my ROI'}<ArrowRight size={15} /></>
+          }
+        </button>
+      </div>
     </form>
   )
 }

@@ -35,7 +35,7 @@ app.use(express.json())
 app.get('/health', (_req, res) => {
   res.json({
     status: 'ok',
-    groq: !!process.env.GROQ_API_KEY,
+    aiConfigured: !!process.env.GROQ_API_KEY,
     adzuna: !!(process.env.ADZUNA_APP_ID && process.env.ADZUNA_APP_KEY),
     numbeo: true,
   })
@@ -48,7 +48,7 @@ app.get('/api/universities/:country', (req, res) => {
 })
 
 // Now returns { result, verification }
-app.post('/api/roi', async (req, res) => {
+app.post('/api/roi/', async (req, res) => {
   try {
     const profile: StudentProfile = req.body
     if (!profile.name || !profile.program || !profile.country || !profile.loanLakhs) {
@@ -63,8 +63,8 @@ app.post('/api/roi', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`\nROI Oracle backend — http://localhost:${PORT}`)
-  console.log(`Groq API key:    ${process.env.GROQ_API_KEY   ? '✓' : '✗ MISSING'}`)
+  console.log(`\nROI Navigator backend — http://localhost:${PORT}`)
+  console.log(`AI API key:      ${process.env.GROQ_API_KEY   ? '✓' : '✗ MISSING'}`)
   console.log(`Adzuna App ID:   ${process.env.ADZUNA_APP_ID  ? '✓' : '✗ not set (fallback mode)'}`)
   console.log(`Adzuna App Key:  ${process.env.ADZUNA_APP_KEY ? '✓' : '✗ not set (fallback mode)'}`)
 })

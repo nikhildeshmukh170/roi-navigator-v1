@@ -75,3 +75,12 @@ export interface DataVerification {
   overallConfidence: number
   fetchedAt: string
 }
+
+export interface ROIAnalysisResponse {
+  result: ROIResult
+  verification: DataVerification
+  meta: {
+    provider: string
+    generatedAt: string
+  }
+}
